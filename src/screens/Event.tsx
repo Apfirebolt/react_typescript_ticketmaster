@@ -89,11 +89,11 @@ const Events = () => {
                 alt={event.name}
                 className="w-full h-48 object-cover"
               />
-              <div className="p-4">
+              <div className="p-4 text-primary-100">
                 <h3 className="text-lg font-semibold">{event.name}</h3>
-                <p className="text-gray-600">{event.dates.start.localDate}</p>
-                <p className="text-gray-600">{event.dates.start.localTime}</p>
-                <p className="text-gray-600">
+                <p>{event.dates.start.localDate}</p>
+                <p>{event.dates.start.localTime}</p>
+                <p>
                   {event._embedded?.venues[0]?.name}
                 </p>
 

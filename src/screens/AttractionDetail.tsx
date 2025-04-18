@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import LoaderComponent from "@/components/Loader.tsx";
 import axiosInstance from "@/plugins/interceptor.ts";
 import type { AttractionDetail } from "@/types/Attraction.ts";
 
-interface AttractionDetailProps {
-  id: string;
-}
-
 const AttractionDetail: React.FC = () => {
-  const { id } = useParams<AttractionDetailProps>();
+  const { id } = useParams<{ id: string }>();
   const [attraction, setAttraction] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -35,7 +32,11 @@ const AttractionDetail: React.FC = () => {
   }, [id]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-screen bg-secondary-100 container mx-auto">
+        <LoaderComponent />
+      </div>
+    );
   }
 
   if (error) {
@@ -47,11 +48,11 @@ const AttractionDetail: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-primary-200 container mx-auto">
-      <h1 className="bg-secondary-200 text-primary-200 text-center py-3 px-2">
+    <div className="min-h-screen bg-secondary-100 container mx-auto">
+      <h1 className="bg-secondary-200 text-3xl text-primary-100 text-center py-3 px-2">
         {attraction.name}
       </h1>
-      <div className="container mx-auto my-3">
+      <div className="container p-3 mx-auto my-3">
         <div className="flex justify-between">
           <p className="w-1/2">Type: {attraction.type}</p>
           <p className="w-1/2">ID: {attraction.id}</p>

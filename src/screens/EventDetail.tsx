@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axiosInstance from "@/plugins/interceptor.ts";
-import { useNavigate } from "react-router-dom";
+import LoaderComponent from "@/components/Loader.tsx";
 
 interface EventDetailProps {
   id: string;
@@ -34,7 +34,11 @@ const EventDetail: React.FC = () => {
   }, [id]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-screen bg-secondary-100 container mx-auto">
+        <LoaderComponent />
+      </div>
+    );
   }
 
   if (error) {
@@ -46,11 +50,11 @@ const EventDetail: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-primary-200 container mx-auto">
-      <h1 className="bg-secondary-200 text-white text-center py-3 px-2">
+    <div className="min-h-screen bg-secondary-100 container mx-auto">
+      <h1 className="bg-secondary-200 text-3xl text-primary-100 text-center py-3 px-2">
         {event.name}
       </h1>
-      <div className="container mx-auto my-3">
+      <div className="container px-2 py-3 mx-auto my-3">
         <div className="flex justify-between">
           <p className="w-1/2">Start Date : {event.dates?.start?.localDate}</p>
           <p className="w-1/2">Start Time : {event.dates?.start?.localTime}</p>

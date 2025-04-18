@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axiosInstance from '@/plugins/interceptor.ts';
-import { useNavigate } from 'react-router-dom';
+import LoaderComponent from '@/components/Loader.tsx';
 
 interface VenuDetailProps {
     id: string;
@@ -35,7 +35,11 @@ const VenuDetail: React.FC = () => {
     }, [id]);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <div className="min-h-screen bg-secondary-100 container mx-auto">
+                <LoaderComponent />
+            </div>
+        );
     }
 
     if (error) {
@@ -48,7 +52,7 @@ const VenuDetail: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-secondary-100 container mx-auto">
-            <h1 className="bg-secondary-200 text-primary-100 text-center py-3 px-2">{venue.name}</h1>
+            <h1 className="bg-secondary-200 text-3xl text-primary-100 text-center py-3 px-2">{venue.name}</h1>
             <div className="container px-3 py-2 mx-auto my-3">
                 <div className="flex justify-between">
                     <p className="w-1/2">City : {venue.city?.name}</p>

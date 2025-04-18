@@ -10,9 +10,10 @@ const FooterComponent: FC = () => {
               <h5 className="mb-2 font-medium uppercase">About the App</h5>
 
               <p className="mb-4">
-                Welcome to the Harry Potter app! Dive into the magical world of
-                Hogwarts, explore characters, spells, and much more. Stay tuned
-                for updates and new features.
+                The TicketMaster App is your gateway to discovering and
+                attending live events. Whether you're a fan of music, sports, or
+                theater, we have something for everyone. Explore our extensive
+                catalog of events and make unforgettable memories.
               </p>
             </div>
 
