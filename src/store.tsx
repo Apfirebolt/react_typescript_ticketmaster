@@ -1,105 +1,86 @@
 import { create } from "zustand";
-import Character from "./types/Character.tsx";
-import Spell from "./types/Spell.tsx";
+import type { Event, EventResponse } from "./types/Event.tsx";
+import type { VenueResponse, Venue } from "./types/Venue.tsx";
+import type { Attraction, AttractionResponse } from "./types/Attraction.tsx";
 import axiosInstance from "./plugins/interceptor.ts";
 
 interface StoreState {
-  characters: Character[];
-  character: Character;
-  spells: Spell[];
-  students: Character[];
-  staff: Character[];
+  events: Event[];
+  venues: Venue[];
+  loading: boolean;
+  attractions: Attraction[];
   error: any;
-  getCharacters: () => Character[];
-  getSpells: () => Spell[];
-  getStudents: () => Character[];
-  fetchCharacters: () => Promise<void>;
-  fetchSpells: () => Promise<void>;
-  fetchStudents: () => Promise<void>;
-  fetchHouseStudents: (house: string) => Promise<void>;
-  fetchStaff: () => Promise<void>;
-  fetchCharacterById: (id: string) => Promise<Character>;
-  resetStudents: () => void;
+  getEvents: () => Event[];
+  getVenues: () => Venue[];
+  getAttractions: () => Attraction[];
+  getVenuesAction: () => Promise<void>;
+  getEventsAction: () => Promise<void>;
+  getAttractionsAction: () => Promise<void>;
 }
 
 const useStore = create<StoreState>((set) => ({
-  characters: [],
-  spells: [],
-  staff: [],
-  students: [],
+  events: [],
+  venues: [],
+  attractions: [],
   error: null,
-  getCharacters: () => {
+  getEvents: () => {
     const state = useStore.getState();
-    return state.characters;
+    return state.events;
   },
-  getSpells: () => {
+  getVenues: () => {
     const state = useStore.getState();
-    return state.spells;
+    return state.venues;
   },
-  getStudents: () => {
+  getAttractions: () => {
     const state = useStore.getState();
-    return state.students;
+    return state.attractions;
   },
-  // As a getter this does not seem to work
-  getStaff: () => {
-    const state = useStore.getState();
-    return state.staff;
-  },
-  resetStudents: () => {
-    set({ students : [] });
-  },
-  fetchCharacters: async () => {
+  getVenuesAction : async (searchQuery: string = "") => {
     try {
-      const { data } = await axiosInstance.get<Character[]>(`characters`);
-      set({ characters: data });
-    } catch (error) {
-      console.error(error);
-    }
-  },
-  fetchSpells: async () => {
-    try {
-      const { data } = await axiosInstance.get<Spell[]>(`spells`);
-      set({ spells: data });
-    } catch (error) {
-      console.error(error);
-    }
-  },
-  fetchStudents: async () => {
-    try {
-      const { data } = await axiosInstance.get<Character[]>(
-        `characters/students`
+      set({ loading: true });
+      const response = await axiosInstance.get<VenueResponse>(
+        `venues.json?apikey=${import.meta.env.VITE_APP_KEY}&locale=*&keyword=${searchQuery}`
       );
-      set({ students: data });
+      if (response.data._embedded.venues.length === 0) {
+        set({ error: "No venues found" });
+        return;
+      }
+      set({ venues: response.data._embedded.venues });
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching venues:", error);
+      set({ error: "Failed to load venues" });
+    } finally {
+      set({ loading: false });
     }
   },
-  fetchStaff: async () => {
+  getEventsAction : async () => {
     try {
-      const { data } = await axiosInstance.get<Character[]>(`characters/staff`);
-      set({ staff: data });
-    } catch (error) {
-      console.error(error);
-    }
-  },
-  fetchCharacterById: async (id: string) => {
-    try {
-      const { data } = await axiosInstance.get<Character[]>(`character/${id}`);
-      set({ character: data[0] });
-    } catch (error) {
-      console.error(error);
-    }
-  },
-  fetchHouseStudents: async (house: string) => {
-    try {
-      const { data } = await axiosInstance.get<Character[]>(
-        `characters/house/${house}`
+      set({ loading: true });
+      const response = await axiosInstance.get<EventResponse>(
+        `events.json?apikey=${import.meta.env.VITE_APP_KEY}&locale=*`
       );
-      set({ students: data });
+      set({ events: response.data._embedded.events });
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching events:", error);
+      set({ error: "Failed to load events" });
+    } finally {
+      set({ loading: false });
     }
   },
+  getAttractionsAction : async () => {
+    try {
+      set({ loading: true });
+      const response = await axiosInstance.get<AttractionResponse>(
+        `attractions.json?apikey=${import.meta.env.VITE_APP_KEY}&locale=*`
+      );
+      set({ attractions: response.data._embedded.attractions });
+    } catch (error) {
+      console.error("Error fetching attractions:", error);
+      set({ error: "Failed to load attractions" });
+    } finally {
+      set({ loading: false });
+    }
+  }
 }));
 
 export default useStore;
