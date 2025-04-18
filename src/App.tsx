@@ -15,6 +15,8 @@ const Venues = React.lazy(() => import("./screens/Venues.tsx"));
 const Attractions = React.lazy(() => import("./screens/Attraction.tsx"));
 const Classification = React.lazy(() => import("./screens/Classification.tsx"));
 const Events = React.lazy(() => import("./screens/Event.tsx"));
+const EventDetail = React.lazy(() => import("./screens/EventDetail.tsx"));
+const NotFoundPage = React.lazy(() => import("./screens/404.tsx"));
 
 
 const App = () => {
@@ -38,10 +40,11 @@ const App = () => {
               <Route path="/attractions" element={<Attractions />} />
               <Route path="/classifications" element={<Classification />} />
               <Route path="/events" element={<Events />} />
+              <Route path="/events/:id" element={<EventDetail />} />
               {/* Add more routes as needed */}
               
               {/* 404 Route */}
-              <Route path="*" element={<div>404 Not Found</div>} />
+              <Route path="*" element={<NotFoundPage />} />
 
             </Routes>
           </Suspense>

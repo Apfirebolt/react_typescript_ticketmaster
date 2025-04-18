@@ -78,7 +78,7 @@ const Events = () => {
             <div
               key={event.id}
               className="bg-white shadow-md rounded overflow-hidden cursor-pointer"
-              onClick={() => navigate(`/event/${event.id}`)}
+              onClick={() => navigate(`/events/${event.id}`)}
             >
               <img
                 src={event.images[0]?.url}
@@ -88,6 +88,15 @@ const Events = () => {
               <div className="p-4">
                 <h3 className="text-lg font-semibold">{event.name}</h3>
                 <p className="text-gray-600">{event.dates.start.localDate}</p>
+                <p className="text-gray-600">{event.dates.start.localTime}</p>
+                <p className="text-gray-600">{event._embedded?.venues[0]?.name}</p>
+
+                <Link
+                  to={`/event/${event.id}`}
+                  className="text-blue-500 hover:underline mt-2 block"
+                >
+                  View Details
+                </Link>
               </div>
             </div>
           ))}

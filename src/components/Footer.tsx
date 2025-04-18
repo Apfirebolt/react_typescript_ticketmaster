@@ -23,7 +23,7 @@ const FooterComponent: FC = () => {
                 Have questions or feedback? Reach out to us at
                 <a href="mailto:support@harrypotterapp.com">
                   {" "}
-                  support@harrypotterapp.com
+                  support@ticketmaster.com
                 </a>
                 . We'd love to hear from you!
               </p>
@@ -32,8 +32,7 @@ const FooterComponent: FC = () => {
         </div>
 
         <div className="w-full bg-black/5 p-4 text-center">
-          © 2025 Copyright:
-          <a href="https://harrypotterapp.com/">Harry Potter App</a>
+          <span>&copy; {new Date().getFullYear()} TicketMaster App. All rights reserved.</span>
         </div>
       </footer>
     </Fragment>
