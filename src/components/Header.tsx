@@ -23,6 +23,10 @@ const HeaderComponent: React.FC = () => {
       name: "Attraction",
       url: "/attractions",
     },
+    {
+      name: "Classification",
+      url: "/classifications",
+    },
   ];
 
   const [open, setOpen] = useState(false);
