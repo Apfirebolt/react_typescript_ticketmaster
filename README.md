@@ -4,33 +4,35 @@
 ![Framer Motion](https://img.shields.io/badge/framer--motion-%23000000.svg?style=for-the-badge&logo=framer&logoColor=white)
 ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
 
-# Harry Potter Info App in React using TailwindCSS
+# Ticket Master App in React and Typescript
 
-A web application that provides detailed information about the Harry Potter universe. It uses the Harry Potter API to fetch real-time data about characters, spells, and houses. You can find more information about the API [here](https://hp-api.onrender.com/api/).
+Ticket Master is a modern web application built with React and TypeScript, designed to help users manage and organize event tickets efficiently. It features a sleek and responsive UI, powered by Tailwind CSS, and leverages Zustand for state management. With smooth animations provided by Framer Motion, the app delivers an engaging user experience.
 
-The app is available for the time being on https://react-harry-potter-nu.vercel.app
+It uses Typescript for type safety and ensures better code maintainability and scalability. By combining the power of TypeScript with React, the app benefits from:
+
+- **Type Safety**: Catch errors during development, reducing runtime bugs.
+- **Improved Developer Experience**: Autocompletion and IntelliSense support in IDEs.
+- **Easier Refactoring**: Strongly typed code makes it easier to refactor and maintain.
+- **Enhanced Collaboration**: Clear type definitions improve team collaboration by reducing ambiguity.
 
 ## Features
 
-* List of all characters, with the ability to search for a specific character.
-* Detailed information about spells used in the Harry Potter series.
-* Information about the four Hogwarts houses.
+- **Search for Venues**: Easily find venues for events with detailed information.
+- **Attraction Discovery**: Explore attractions and performers with relevant details.
+- **Event Search**: Look up events by date, location, or category to plan your schedule.
+- **Responsive Design**: Enjoy a seamless experience across devices.
+- **Smooth Animations**: Navigate the app with visually appealing transitions.
+- **State Persistence**: Retain user preferences and data using Zustand.
 
 ## Project Screenshots
 
-### Character List
-![Character Details](screenshots/2.png)
-
-### Spells List
-![Spells List](screenshots/3.png)
-
-### Houses List
-![Houses List](screenshots/2.png)
+Would be added later
 
 ## Technologies used
 
 * React - For UI development
 * Tailwind CSS - For CSS component styling
+* Typescript - For declaring types and autocomplete code help
 * Zustand - For data store management
 * Framer-Motion - For smooth page transitions and other animations
 
@@ -40,74 +42,14 @@ Zustand is a small, fast, and scalable state management solution for React appli
 
 Unlike React Redux, which relies on a centralized store and actions to update the state, Zustand allows you to create multiple stores and directly mutate the state within the store. This can lead to more concise and readable code. Additionally, Zustand does not require boilerplate code such as action creators and reducers, making it easier to set up and use.
 
-Below is a concise example of creating a store from Zustand and manipulating values from the API call.
-
-```Typescript
-import { create } from "zustand";
-import Character from "./types/Character.tsx";
-import Spell from "./types/Spell.tsx";
-import axiosInstance from "./plugins/interceptor.ts";
-
-interface StoreState {
-  characters: Character[];
-  character: Character;
-  getCharacters: () => Character[];
-  getSpells: () => Spell[];
-  getStudents: () => Character[];
-  fetchCharacters: () => Promise<void>;
-  fetchSpells: () => Promise<void>;
-}
-
-const useStore = create<StoreState>((set) => ({
-  characters: [],
-  spells: [],
-  staff: [],
-  students: [],
-  error: null,
-  getCharacters: () => {
-    const state = useStore.getState();
-    return state.characters;
-  },
-  fetchStudents: async () => {
-    try {
-      const { data } = await axiosInstance.get<Character[]>(
-        `characters/students`
-      );
-      set({ students: data });
-    } catch (error) {
-      console.error(error);
-    }
-  },
-  fetchStaff: async () => {
-    try {
-      const { data } = await axiosInstance.get<Character[]>(`characters/staff`);
-      set({ staff: data });
-    } catch (error) {
-      console.error(error);
-    }
-  },
-  fetchCharacterById: async (id: string) => {
-    try {
-      const { data } = await axiosInstance.get<Character[]>(`character/${id}`);
-      set({ character: data[0] });
-    } catch (error) {
-      console.error(error);
-    }
-  },
-}));
-
-export default useStore;
-
-```
-
 ## Running the Project
 
 To run the project locally, follow these steps:
 
 1. **Clone the repository**:
   ```sh
-  git clone https://github.com/apfirebolt/react_harry_potter.git
-  cd react_harry_potter
+  git clone https://github.com/apfirebolt/react_ticketmaster.git
+  cd react_ticketmaster
   ```
 
 2. **Install dependencies**:
