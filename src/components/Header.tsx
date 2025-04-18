@@ -47,11 +47,11 @@ const HeaderComponent: React.FC = () => {
   });
 
   return (
-    <nav className="bg-primary-200 border-gray-200 px-2 sm:px-4 py-4">
+    <nav className="bg-primary-300 border-gray-200 px-2 sm:px-4 py-4">
       {transitions((style, item) =>
         item && (
           <animated.div style={style} className="my-3 md:hidden">
-            <ul className="flex flex-col mt-4 bg-secondary-200 text-white rounded-lg border border-gray-100">
+            <ul className="flex flex-col mt-4 bg-primary-200 text-white rounded-lg border border-gray-100">
               <li className="flex justify-end">
                 <button
                   type="button"
@@ -103,12 +103,12 @@ const HeaderComponent: React.FC = () => {
           </svg>
         </button>
         <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-          <ul className="flex flex-col mt-4 bg-orange-600 text-white rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:font-medium md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          <ul className="flex flex-col mt-4 bg-primary-100 text-white rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:font-medium md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             {links.map((link) => (
               <li key={link.name}>
                 <Link
                   to={link.url}
-                  className="block p-4 dark:text-gray-300 dark:hover:text-gray-100 hover:text-primary-300 hover:bg-primary-200 transition-all duration-150"
+                  className="block p-4 dark:text-gray-300 dark:hover:text-gray-100 hover:text-secondary-200 hover:bg-primary-200 transition-all duration-150"
                 >
                   {link.name}
                 </Link>

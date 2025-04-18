@@ -47,9 +47,9 @@ const VenuDetail: React.FC = () => {
     }
 
     return (
-        <div>
-            <h1 className="bg-secondary-200 text-white text-center py-3 px-2">{venue.name}</h1>
-            <div className="container mx-auto my-3">
+        <div className="min-h-screen bg-secondary-100 container mx-auto">
+            <h1 className="bg-secondary-200 text-primary-100 text-center py-3 px-2">{venue.name}</h1>
+            <div className="container px-3 py-2 mx-auto my-3">
                 <div className="flex justify-between">
                     <p className="w-1/2">City : {venue.city?.name}</p>
                     <p className="w-1/2">Country : {venue.country?.name}</p>

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "@/plugins/interceptor.ts";
+
 import type { Attraction, AttractionResponse } from "@/types/Attraction.ts";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader.tsx";
+import { FaSearch } from "react-icons/fa";
 
 const Attractions = () => {
   const [attractions, setAttractions] = useState<Attraction[]>([]);
@@ -51,21 +53,24 @@ const Attractions = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-primary-300 container mx-auto">
-      <div className="p-4">
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search for attractions..."
-          className="w-full p-2 border border-gray-300 rounded"
-        />
+    <div className="min-h-screen bg-primary-200 container mx-auto">
+      <div className="p-4 flex justify-center items-center">
+        <div className="relative w-1/2">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search for attractions..."
+            className="w-full p-2 pl-10 border border-gray-300 rounded"
+          />
+          <FaSearch className="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-400" />
+        </div>
         <button
-          onClick={handleSearch}
-          className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          Search
-        </button>
+            onClick={handleSearch}
+            className="px-4 py-2 bg-secondary-300 text-white rounded hover:bg-blue-600"
+          >
+            Search
+          </button>
       </div>
       {loading ? (
         <Loader />
@@ -76,16 +81,16 @@ const Attractions = () => {
           {attractions.map((attraction) => (
             <div
               key={attraction.id}
-              className="bg-white shadow-md rounded-lg overflow-hidden"
+              className="shadow-md rounded-lg overflow-hidden"
             >
-              <div className="p-4">
+              <div className="p-4 bg-secondary-200 text-primary-200">
                 <h3 className="text-lg font-semibold">{attraction.name}</h3>
                 <p className="text-sm text-gray-600">
                   {attraction.classifications?.[0]?.segment?.name}
                 </p>
                 <button
                   onClick={() => navigate(`/attractions/${attraction.id}`)}
-                  className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                  className="mt-4 px-4 py-2 bg-secondary-300 text-white rounded hover:bg-blue-600"
                 >
                   View Details
                 </button>

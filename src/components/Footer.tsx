@@ -3,7 +3,7 @@ import React, { Fragment, FC } from "react";
 const FooterComponent: FC = () => {
   return (
     <Fragment>
-      <footer className="flex flex-col items-center bg-zinc-50 text-center text-surface dark:bg-neutral-700 dark:text-white lg:text-left">
+      <footer className="flex flex-col items-center bg-primary-100 text-center text-secondary-200 dark:bg-neutral-700 dark:text-white lg:text-left">
         <div className="container p-6">
           <div className="grid gap-4 lg:grid-cols-2">
             <div className="mb-6 md:mb-0">

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import type { Event, EventResponse } from "@/types/Event.ts";
 import axiosInstance from "@/plugins/interceptor.ts";
+import { FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader.tsx";
 
@@ -52,18 +53,21 @@ const Events = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-primary-300 container mx-auto">
-      <div className="p-4">
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search for events..."
-          className="w-full p-2 border border-gray-300 rounded"
-        />
+    <div className="min-h-screen bg-primary-200 container mx-auto">
+      <div className="p-4 flex justify-center items-center">
+        <div className="relative w-1/2">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search for attractions..."
+            className="w-full p-2 pl-10 border border-gray-300 rounded"
+          />
+          <FaSearch className="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-400" />
+        </div>
         <button
           onClick={handleSearch}
-          className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          className="px-4 py-2 bg-secondary-300 text-secondary-100 rounded hover:bg-blue-600"
         >
           Search
         </button>
@@ -89,11 +93,13 @@ const Events = () => {
                 <h3 className="text-lg font-semibold">{event.name}</h3>
                 <p className="text-gray-600">{event.dates.start.localDate}</p>
                 <p className="text-gray-600">{event.dates.start.localTime}</p>
-                <p className="text-gray-600">{event._embedded?.venues[0]?.name}</p>
+                <p className="text-gray-600">
+                  {event._embedded?.venues[0]?.name}
+                </p>
 
                 <Link
                   to={`/event/${event.id}`}
-                  className="text-blue-500 hover:underline mt-2 block"
+                  className="bg-secondary-300 text-secondary-200 text-center shadow-lg hover:bg-secondary-100 hover:text-black p-2 mt-2 block"
                 >
                   View Details
                 </Link>
