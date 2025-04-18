@@ -14,6 +14,7 @@ const HomePage = React.lazy(() => import("./screens/Home.tsx"));
 const Venues = React.lazy(() => import("./screens/Venues.tsx"));
 const Attractions = React.lazy(() => import("./screens/Attraction.tsx"));
 const Classification = React.lazy(() => import("./screens/Classification.tsx"));
+const Events = React.lazy(() => import("./screens/Event.tsx"));
 
 
 const App = () => {
@@ -36,6 +37,7 @@ const App = () => {
               <Route path="/venues" element={<Venues />} />
               <Route path="/attractions" element={<Attractions />} />
               <Route path="/classifications" element={<Classification />} />
+              <Route path="/events" element={<Events />} />
               {/* Add more routes as needed */}
               
               {/* 404 Route */}
