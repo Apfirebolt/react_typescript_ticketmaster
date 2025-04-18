@@ -1,55 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import type { Event, EventResponse } from "@/types/Event.ts";
-import axiosInstance from "@/plugins/interceptor.ts";
+import useStore from "@/store.tsx";
 import { FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader.tsx";
 
 const Events = () => {
-  const [events, setEvents] = useState<Event[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState("");
+  const { getEventsAction, loading, events, error } = useStore();
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const getEvents = async () => {
-    try {
-      setLoading(true);
-      const response = await axiosInstance.get<EventResponse>(
-        `events.json?apikey=${import.meta.env.VITE_APP_KEY}&locale=*`
-      );
-      setEvents(response.data._embedded.events);
-      setLoading(false);
-      console.log("Events data:", response.data);
-    } catch (error) {
-      console.error("Error fetching events:", error);
-      setError("Failed to load events");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleSearch = async () => {
-    try {
-      setLoading(true);
-      const response = await axiosInstance.get(
-        `events.json?apikey=${
-          import.meta.env.VITE_APP_KEY
-        }&keyword=${searchQuery}&locale=*`
-      );
-      setEvents(response.data._embedded.events);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error searching events:", error);
-      setError("Failed to search events");
-    } finally {
-      setLoading(false);
+  const handleSearch = () => {
+    if (searchQuery.trim() !== "") {
+      getEventsAction(searchQuery);
     }
   };
 
   useEffect(() => {
-    getEvents();
+    getEventsAction();
   }, []);
 
   return (

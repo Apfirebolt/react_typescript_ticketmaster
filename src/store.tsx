@@ -53,12 +53,16 @@ const useStore = create<StoreState>((set) => ({
       set({ loading: false });
     }
   },
-  getEventsAction : async () => {
+  getEventsAction : async (searchQuery: string = "") => {
     try {
       set({ loading: true });
       const response = await axiosInstance.get<EventResponse>(
-        `events.json?apikey=${import.meta.env.VITE_APP_KEY}&locale=*`
+        `events.json?apikey=${import.meta.env.VITE_APP_KEY}&locale=*&keyword=${searchQuery}`
       );
+      if (response.data._embedded.events.length === 0) {
+        set({ error: "No events found" });
+        return;
+      }
       set({ events: response.data._embedded.events });
     } catch (error) {
       console.error("Error fetching events:", error);
@@ -67,12 +71,19 @@ const useStore = create<StoreState>((set) => ({
       set({ loading: false });
     }
   },
-  getAttractionsAction : async () => {
+  getAttractionsAction : async (searchQuery: string = "") => {
     try {
       set({ loading: true });
       const response = await axiosInstance.get<AttractionResponse>(
-        `attractions.json?apikey=${import.meta.env.VITE_APP_KEY}&locale=*`
+        `attractions.json?apikey=${import.meta.env.VITE_APP_KEY}&locale=*&keyword=${searchQuery}`
       );
+      if (response.data._embedded.attractions.length === 0) {
+        set({ error: "No attractions found" });
+        return;
+      }
+      if (response.data._embedded.attractions.length > 0) {
+        set({ error: null });
+      }
       set({ attractions: response.data._embedded.attractions });
     } catch (error) {
       console.error("Error fetching attractions:", error);

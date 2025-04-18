@@ -1,55 +1,22 @@
 import React, { useState, useEffect } from "react";
-import axiosInstance from "@/plugins/interceptor.ts";
-
-import type { Attraction, AttractionResponse } from "@/types/Attraction.ts";
+import useStore from "@/store.tsx";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader.tsx";
 import { FaSearch } from "react-icons/fa";
 
 const Attractions = () => {
-  const [attractions, setAttractions] = useState<Attraction[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState("");
+  const { getAttractionsAction, loading, attractions, error } = useStore();
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const getAttractions = async () => {
-    try {
-      setLoading(true);
-      const response = await axiosInstance.get<AttractionResponse>(
-        `attractions.json?apikey=${import.meta.env.VITE_APP_KEY}&locale=*`
-      );
-      setAttractions(response.data._embedded.attractions);
-      setLoading(false);
-      console.log("Attractions data:", response.data);
-    } catch (error) {
-      console.error("Error fetching attractions:", error);
-      setError("Failed to load attractions");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleSearch = async () => {
-    try {
-      setLoading(true);
-      const response = await axiosInstance.get(
-        `attractions.json?apikey=${
-          import.meta.env.VITE_APP_KEY
-        }&keyword=${searchQuery}&locale=*`
-      );
-      setAttractions(response.data._embedded.attractions);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error searching attractions:", error);
-      setError("Failed to search attractions");
-    } finally {
-      setLoading(false);
+  const handleSearch = () => {
+    if (searchQuery.trim() !== "") {
+      getAttractionsAction(searchQuery);
     }
   };
 
   useEffect(() => {
-    getAttractions();
+    getAttractionsAction();
   }, []);
 
   return (
