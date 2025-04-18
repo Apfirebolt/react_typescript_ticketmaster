@@ -28,6 +28,23 @@ export interface Attraction {
     };
 }
 
+export interface AttractionDetail {
+    name: string;
+    type: string;
+    id: string;
+    test: boolean;
+    url: string;
+    locale: string;
+    externalLinks?: ExternalLinks;
+    aliases?: string[];
+    images: Image[];
+    classifications: Classification[];
+    upcomingEvents: UpcomingEvents;
+    _links?: {
+        self: Link;
+    };
+}
+
 export interface ExternalLinks {
     youtube?: ExternalLink[];
     twitter?: ExternalLink[];

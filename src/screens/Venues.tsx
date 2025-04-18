@@ -85,7 +85,7 @@ const Venues = () => {
                   {venue.city?.name}, {venue.state?.stateCode}
                 </p>
                 <button
-                  onClick={() => navigate(`/venue/${venue.id}`)}
+                  onClick={() => navigate(`/venues/${venue.id}`)}
                   className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
                 >
                   View Details

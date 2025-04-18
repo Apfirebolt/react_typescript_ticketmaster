@@ -16,6 +16,8 @@ const Attractions = React.lazy(() => import("./screens/Attraction.tsx"));
 const Classification = React.lazy(() => import("./screens/Classification.tsx"));
 const Events = React.lazy(() => import("./screens/Event.tsx"));
 const EventDetail = React.lazy(() => import("./screens/EventDetail.tsx"));
+const VenueDetail = React.lazy(() => import("./screens/VenueDetail.tsx"));
+const AttractionDetail = React.lazy(() => import("./screens/AttractionDetail.tsx"));
 const NotFoundPage = React.lazy(() => import("./screens/404.tsx"));
 
 
@@ -37,7 +39,9 @@ const App = () => {
             <Routes location={item}>
               <Route path="/" element={<HomePage />} />
               <Route path="/venues" element={<Venues />} />
+              <Route path="/venues/:id" element={<VenueDetail />} />
               <Route path="/attractions" element={<Attractions />} />
+              <Route path="/attractions/:id" element={<AttractionDetail />} />
               <Route path="/classifications" element={<Classification />} />
               <Route path="/events" element={<Events />} />
               <Route path="/events/:id" element={<EventDetail />} />
