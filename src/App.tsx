@@ -11,6 +11,8 @@ import Footer from "./components/Footer.tsx";
 import { useTransition, animated } from "react-spring";
 
 const HomePage = React.lazy(() => import("./screens/Home.tsx"));
+const Venues = React.lazy(() => import("./screens/Venues.tsx"));
+const Attractions = React.lazy(() => import("./screens/Attraction.tsx"));
 
 
 const App = () => {
@@ -30,6 +32,9 @@ const App = () => {
           <Suspense fallback={<div>Loading...</div>}>
             <Routes location={item}>
               <Route path="/" element={<HomePage />} />
+              <Route path="/venues" element={<Venues />} />
+              <Route path="/attractions" element={<Attractions />} />
+              <Route path="*" element={<div>404 Not Found</div>} />
             </Routes>
           </Suspense>
         </animated.div>
