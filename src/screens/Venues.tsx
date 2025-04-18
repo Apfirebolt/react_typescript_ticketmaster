@@ -1,10 +1,12 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
+import { Link } from "react-router-dom";
+import type { Venue, VenueResponse } from "@/types/Venue.ts";
 import axiosInstance from "@/plugins/interceptor.ts";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader.tsx";
 
 const Venues = () => {
-  const [venues, setVenues] = useState<any[]>([]);
+  const [venues, setVenues] = useState<Venue[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -13,7 +15,7 @@ const Venues = () => {
   const getVenues = async () => {
     try {
       setLoading(true);
-      const response = await axiosInstance.get(
+      const response = await axiosInstance.get<VenueResponse>(
         `venues.json?apikey=${import.meta.env.VITE_APP_KEY}&locale=*`
       );
       setVenues(response.data._embedded.venues);

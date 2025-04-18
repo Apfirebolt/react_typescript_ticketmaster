@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "@/plugins/interceptor.ts";
+import type { Attraction, AttractionResponse } from "@/types/Attraction.ts";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader.tsx";
 
 const Attractions = () => {
-  const [attractions, setAttractions] = useState<any[]>([]);
+  const [attractions, setAttractions] = useState<Attraction[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -13,7 +14,7 @@ const Attractions = () => {
   const getAttractions = async () => {
     try {
       setLoading(true);
-      const response = await axiosInstance.get(
+      const response = await axiosInstance.get<AttractionResponse>(
         `attractions.json?apikey=${import.meta.env.VITE_APP_KEY}&locale=*`
       );
       setAttractions(response.data._embedded.attractions);
