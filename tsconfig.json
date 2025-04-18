@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    // ...
+    "baseUrl": ".",
+    "jsx": "react",
+    "target": "es2017",
+    "module": "esnext",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "moduleResolution": "nodenext",
+    "allowSyntheticDefaultImports": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true    
+    // ...
+  }
+}
