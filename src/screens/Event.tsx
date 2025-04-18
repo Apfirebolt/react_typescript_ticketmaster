@@ -22,23 +22,28 @@ const Events = () => {
 
   return (
     <div className="min-h-screen bg-primary-200 container mx-auto">
-      <div className="p-4 flex justify-center items-center">
-        <div className="relative w-1/2">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search for attractions..."
-            className="w-full p-2 pl-10 border border-gray-300 rounded"
-          />
-          <FaSearch className="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-400" />
+      <div>
+        <h1 className="bg-white text-primary-200 text-center font-bold p-4 text-3xl">
+          Events
+        </h1>
+        <div className="p-4 flex justify-center items-center">
+          <div className="relative w-1/2">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search for attractions..."
+              className="w-full p-2 pl-10 border border-gray-300 rounded"
+            />
+            <FaSearch className="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-400" />
+          </div>
+          <button
+            onClick={handleSearch}
+            className="px-4 py-2 bg-secondary-300 text-secondary-100 rounded hover:bg-blue-600"
+          >
+            Search
+          </button>
         </div>
-        <button
-          onClick={handleSearch}
-          className="px-4 py-2 bg-secondary-300 text-secondary-100 rounded hover:bg-blue-600"
-        >
-          Search
-        </button>
       </div>
       {loading ? (
         <Loader />
@@ -61,9 +66,7 @@ const Events = () => {
                 <h3 className="text-lg font-semibold">{event.name}</h3>
                 <p>{event.dates.start.localDate}</p>
                 <p>{event.dates.start.localTime}</p>
-                <p>
-                  {event._embedded?.venues[0]?.name}
-                </p>
+                <p>{event._embedded?.venues[0]?.name}</p>
 
                 <Link
                   to={`/event/${event.id}`}
