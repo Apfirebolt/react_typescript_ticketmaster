@@ -6,6 +6,8 @@
 
 # Ticket Master App in React and Typescript
 
+![Cover Photo](screenshots/1.png)
+
 Ticket Master is a modern web application built with React and TypeScript, designed to help users manage and organize event tickets efficiently. It features a sleek and responsive UI, powered by Tailwind CSS, and leverages Zustand for state management. With smooth animations provided by Framer Motion, the app delivers an engaging user experience.
 
 It uses Typescript for type safety and ensures better code maintainability and scalability. By combining the power of TypeScript with React, the app benefits from:
@@ -26,7 +28,11 @@ It uses Typescript for type safety and ensures better code maintainability and s
 
 ## Project Screenshots
 
-Would be added later
+Please find some of the screenshots below showing events, venues and attractions
+
+![Screenshot 2](screenshots/2.png)
+![Screenshot 3](screenshots/3.png)
+![Screenshot 4](screenshots/4.png)
 
 ## Technologies used
 
