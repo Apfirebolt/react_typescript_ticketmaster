@@ -4,11 +4,27 @@ import type { VenueResponse, Venue } from "./types/Venue.tsx";
 import type { Attraction, AttractionResponse } from "./types/Attraction.tsx";
 import axiosInstance from "./plugins/interceptor.ts";
 
+interface PaginationLinks {
+  first: {
+    href: string;
+  };
+  self: {
+    href: string;
+  };
+  next: {
+    href: string;
+  };
+  last: {
+    href: string;
+  };
+}
+
 interface StoreState {
   events: Event[];
   venues: Venue[];
   loading: boolean;
   attractions: Attraction[];
+  links: PaginationLinks;
   error: any;
   getEvents: () => Event[];
   getVenues: () => Venue[];
@@ -35,11 +51,11 @@ const useStore = create<StoreState>((set) => ({
     const state = useStore.getState();
     return state.attractions;
   },
-  getVenuesAction : async (searchQuery: string = "") => {
+  getVenuesAction : async (searchQuery: string = "", page: number = 1) => {
     try {
       set({ loading: true });
       const response = await axiosInstance.get<VenueResponse>(
-        `venues.json?apikey=${import.meta.env.VITE_APP_KEY}&locale=*&keyword=${searchQuery}`
+        `venues.json?apikey=${import.meta.env.VITE_APP_KEY}&locale=*&keyword=${searchQuery}&page=${page}`
       );
       if (response.data._embedded.venues.length === 0) {
         set({ error: "No venues found" });
@@ -53,16 +69,18 @@ const useStore = create<StoreState>((set) => ({
       set({ loading: false });
     }
   },
-  getEventsAction : async (searchQuery: string = "") => {
+  getEventsAction : async (searchQuery: string = "", page: number = 1) => {
     try {
       set({ loading: true });
       const response = await axiosInstance.get<EventResponse>(
-        `events.json?apikey=${import.meta.env.VITE_APP_KEY}&locale=*&keyword=${searchQuery}`
+        `events.json?apikey=${import.meta.env.VITE_APP_KEY}&locale=*&keyword=${searchQuery}&page=${page}`
       );
       if (response.data._embedded.events.length === 0) {
         set({ error: "No events found" });
         return;
       }
+      // set pagination links
+      set({ links: response.data._links });
       set({ events: response.data._embedded.events });
     } catch (error) {
       console.error("Error fetching events:", error);
@@ -71,11 +89,11 @@ const useStore = create<StoreState>((set) => ({
       set({ loading: false });
     }
   },
-  getAttractionsAction : async (searchQuery: string = "") => {
+  getAttractionsAction : async (searchQuery: string = "", page: number = 1) => {
     try {
       set({ loading: true });
       const response = await axiosInstance.get<AttractionResponse>(
-        `attractions.json?apikey=${import.meta.env.VITE_APP_KEY}&locale=*&keyword=${searchQuery}`
+        `attractions.json?apikey=${import.meta.env.VITE_APP_KEY}&locale=*&keyword=${searchQuery}&page=${page}`
       );
       if (response.data._embedded.attractions.length === 0) {
         set({ error: "No attractions found" });

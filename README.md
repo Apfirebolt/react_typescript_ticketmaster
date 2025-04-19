@@ -80,3 +80,4 @@ This will create an optimized build of the application in the `dist` folder.
 6. Open a pull request.
 
 Thank you for your contributions!
+git

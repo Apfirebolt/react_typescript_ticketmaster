@@ -8,6 +8,7 @@ import Loader from "../components/Loader.tsx";
 const Events = () => {
   const { getEventsAction, loading, events, error } = useStore();
   const navigate = useNavigate();
+  const [page, setPage] = useState<number>(1);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const handleSearch = () => {
@@ -19,6 +20,16 @@ const Events = () => {
   useEffect(() => {
     getEventsAction();
   }, []);
+
+  const goToNextPage = () => {
+    setPage((prevPage) => prevPage + 1);
+    getEventsAction(searchQuery, page + 1);
+  };
+
+  const goToPreviousPage = () => {
+    setPage((prevPage) => prevPage - 1);
+    getEventsAction(searchQuery, page);
+  }
 
   return (
     <div className="min-h-screen bg-primary-200 container mx-auto">
@@ -50,7 +61,8 @@ const Events = () => {
       ) : error ? (
         <div className="text-red-500 text-center">{error}</div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+        <div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
           {events.map((event) => (
             <div
               key={event.id}
@@ -77,6 +89,30 @@ const Events = () => {
               </div>
             </div>
           ))}
+        </div>
+          {events.length === 0 && (
+            <div className="text-center text-gray-500">
+              No events found.
+            </div>
+          )}
+          <div className="pb-3">
+            <div className="flex justify-center items-center mt-4">
+              <button
+                onClick={() => goToPreviousPage()}
+                className="px-4 py-2 bg-secondary-300 text-secondary-100 rounded hover:bg-blue-600 mx-2"
+                disabled={loading || page === 1}
+              >
+                Previous
+              </button>
+              <button
+                onClick={() => goToNextPage()}
+                className="px-4 py-2 bg-secondary-300 text-secondary-100 rounded hover:bg-blue-600 mx-2"
+                disabled={loading}
+              >
+                Next
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
