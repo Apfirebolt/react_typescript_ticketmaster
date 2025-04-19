@@ -68,6 +68,7 @@ export interface Market {
 
 export interface DMA {
   id: number;
+  name: string;
 }
 
 export interface BoxOfficeInfo {
