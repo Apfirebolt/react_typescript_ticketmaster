@@ -10,6 +10,8 @@ import Header from "./components/Header.tsx";
 import Footer from "./components/Footer.tsx";
 import { useTransition, animated } from "react-spring";
 
+const Login = React.lazy(() => import("./screens/Login.tsx"));
+const Register = React.lazy(() => import("./screens/Register.tsx"));
 const HomePage = React.lazy(() => import("./screens/Home.tsx"));
 const Venues = React.lazy(() => import("./screens/Venues.tsx"));
 const Attractions = React.lazy(() => import("./screens/Attraction.tsx"));
@@ -38,6 +40,8 @@ const App = () => {
           <Suspense fallback={<div>Loading...</div>}>
             <Routes location={item}>
               <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
               <Route path="/venues" element={<Venues />} />
               <Route path="/venues/:id" element={<VenueDetail />} />
               <Route path="/attractions" element={<Attractions />} />

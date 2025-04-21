@@ -16,6 +16,10 @@ const HeaderComponent: React.FC = () => {
       url: "/",
     },
     {
+      name: "Login",
+      url: "/login",
+    },
+    {
       name: "Venue",
       url: "/venues",
     },
