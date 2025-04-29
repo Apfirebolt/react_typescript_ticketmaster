@@ -1,5 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import type {
   Classification,
   ClassificationResponse,

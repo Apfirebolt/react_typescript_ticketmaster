@@ -63,7 +63,10 @@ const EventDetail: React.FC = () => {
         <p>{event._embedded?.venues[0]?.name}</p>
         <p>{event._embedded?.venues[0]?.city?.name}</p>
         <p>{event._embedded?.venues[0]?.country?.name}</p>
-        <p className="my-3 text-secondary-300">{event.info}</p>
+        <p className="my-3 text-secondary-300 border-2 px-2 py-4">{event.info}</p>
+        <p className="text-secondary-300">
+          <span className="font-semibold text-lg text-primary-100">Ticket Limit Info:</span> {event.ticketLimit?.info}
+        </p>
         {event.images && (
           <img
             src={event.images[0]?.url}
@@ -72,6 +75,14 @@ const EventDetail: React.FC = () => {
             className="mx-auto my-3"
           />
         )}
+        <div className="flex justify-center">
+          <button
+            onClick={() => console.log("Event saved:", event)}
+            className="bg-primary-100 text-white py-2 mx-auto px-4 rounded hover:bg-primary-200"
+          >
+            Save Event
+          </button>
+        </div>
       </div>
     </div>
   );

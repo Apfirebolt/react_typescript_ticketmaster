@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaTimes, FaLock, FaUserAlt, FaEnvelope } from "react-icons/fa";
+import { FaLock, FaUserAlt, FaEnvelope } from "react-icons/fa";
 
 const Register: React.FC = () => {
     const [username, setUsername] = useState<string>("");
