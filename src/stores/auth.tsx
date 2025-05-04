@@ -8,7 +8,7 @@ interface AuthState {
     error: string | null;
     login: (email: string, password: string) => Promise<void>;
     logout: () => void;
-    register: (email: string, password: string) => Promise<void>;
+    register: (username: string, email: string, password: string) => Promise<void>;
     fetchUser: () => Promise<void>;
 }
 
@@ -34,10 +34,10 @@ const useAuthStore = create<AuthState>((set) => ({
         set({ user: null, token: null });
         localStorage.removeItem("token"); // Remove token from localStorage
     },
-    register: async (email: string, password: string) => {
+    register: async (username: string, email: string, password: string) => {
         try {
             set({ loading: true, error: null });
-            await axios.post("http://localhost:8000/api/auth/register", { email, password });
+            await axios.post("http://localhost:8000/api/auth/register", { username, email, password });
         } catch (error) {
             console.error("Registration error:", error);
             set({ error: "Failed to register" });

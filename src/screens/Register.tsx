@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "@/stores/auth.tsx";
+import useAuthStore from "@/stores/auth.tsx";
 import { FaLock, FaUserAlt, FaEnvelope } from "react-icons/fa";
 
 const Register: React.FC = () => {
+    const { register } = useAuthStore();
     const [username, setUsername] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
@@ -16,8 +17,7 @@ const Register: React.FC = () => {
         setLoading(true);
 
         try {
-            const authStore = useAuthStore.getState();
-            await authStore.register(username, email, password);
+            await register(username, email, password);
             navigate("/login");
         } catch (err: any) {
             setError("Registration failed. Please try again.");
