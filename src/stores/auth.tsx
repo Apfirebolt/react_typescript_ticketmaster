@@ -21,7 +21,7 @@ const useAuthStore = create<AuthState>((set) => ({
         try {
             set({ loading: true, error: null });
             const response = await axios.post("http://localhost:8000/api/auth/login", { email, password });
-            set({ user: response.data.user, token: response.data.token });
+            set({ user: response.data.user, token: response.data.access_token });
             localStorage.setItem("token", response.data.token); // Save token to localStorage
         } catch (error) {
             console.error("Login error:", error);
