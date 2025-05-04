@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaTimes, FaLock, FaUserAlt } from "react-icons/fa";
+import useAuthStore from "@/stores/auth.tsx";
+import { FaLock, FaUserAlt } from "react-icons/fa";
 
 const Login: React.FC = () => {
+  const { login } = useAuthStore();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
@@ -13,15 +15,11 @@ const Login: React.FC = () => {
     setError("");
     setLoading(true);
 
-    // Simulate login logic
     try {
-      if (email === "test@example.com" && password === "password") {
-        navigate("/dashboard"); // Redirect to dashboard on successful login
-      } else {
-        setError("Invalid email or password");
-      }
-    } catch (err) {
-      setError("An error occurred. Please try again.");
+      await login(email, password);
+      navigate("/");
+    } catch (err: any) {
+      setError("Invalid email or password");
     } finally {
       setLoading(false);
     }

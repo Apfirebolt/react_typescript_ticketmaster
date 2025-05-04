@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "@/stores/auth.tsx";
 import { FaLock, FaUserAlt, FaEnvelope } from "react-icons/fa";
 
 const Register: React.FC = () => {
@@ -14,16 +15,12 @@ const Register: React.FC = () => {
         setError("");
         setLoading(true);
 
-        // Simulate registration logic
         try {
-            if (username && email && password) {
-                // Simulate successful registration
-                navigate("/login"); // Redirect to login page on successful registration
-            } else {
-                setError("All fields are required");
-            }
-        } catch (err) {
-            setError("An error occurred. Please try again.");
+            const authStore = useAuthStore.getState();
+            await authStore.register(username, email, password);
+            navigate("/login");
+        } catch (err: any) {
+            setError("Registration failed. Please try again.");
         } finally {
             setLoading(false);
         }
