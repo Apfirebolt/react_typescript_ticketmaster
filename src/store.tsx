@@ -57,9 +57,12 @@ const useStore = create<StoreState>((set) => ({
       const response = await axiosInstance.get<VenueResponse>(
         `venues.json?apikey=${import.meta.env.VITE_APP_KEY}&locale=*&keyword=${searchQuery}&page=${page}`
       );
-      if (response.data._embedded.venues.length === 0) {
+      if (!response.data._embedded || !response.data._embedded.venues || response.data._embedded.venues.length === 0) {
         set({ error: "No venues found" });
         return;
+      }
+      if (response.data._embedded.venues.length > 0) {
+        set({ error: null });
       }
       set({ venues: response.data._embedded.venues });
     } catch (error) {
@@ -75,9 +78,12 @@ const useStore = create<StoreState>((set) => ({
       const response = await axiosInstance.get<EventResponse>(
         `events.json?apikey=${import.meta.env.VITE_APP_KEY}&locale=*&keyword=${searchQuery}&page=${page}`
       );
-      if (response.data._embedded.events.length === 0) {
+      if (!response.data._embedded || !response.data._embedded.events || response.data._embedded.events.length === 0) {
         set({ error: "No events found" });
         return;
+      }
+      if (response.data._embedded.events.length > 0) {
+        set({ error: null });
       }
       // set pagination links
       set({ links: response.data._links });
@@ -95,7 +101,7 @@ const useStore = create<StoreState>((set) => ({
       const response = await axiosInstance.get<AttractionResponse>(
         `attractions.json?apikey=${import.meta.env.VITE_APP_KEY}&locale=*&keyword=${searchQuery}&page=${page}`
       );
-      if (response.data._embedded.attractions.length === 0) {
+      if (!response.data._embedded || !response.data._embedded.attractions || response.data._embedded.attractions.length === 0) {
         set({ error: "No attractions found" });
         return;
       }
