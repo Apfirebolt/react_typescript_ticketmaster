@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useAuthStore from "@/stores/auth.tsx";
+import useAuthStore from "@/stores/auth.ts";
 import { FaLock, FaUserAlt, FaEnvelope } from "react-icons/fa";
 
 const Register: React.FC = () => {

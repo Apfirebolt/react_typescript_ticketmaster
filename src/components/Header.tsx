@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import useAuthStore from "@/stores/auth.tsx";
+import useAuthStore from "@/stores/auth.ts";
 import { useTransition, animated } from "react-spring";
 import { FaTimes } from "react-icons/fa";
 

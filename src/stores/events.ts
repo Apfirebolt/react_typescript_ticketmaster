@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import useAuthStore from "./auth.ts";
 import type { Event, EventResponse } from "./types/Event.tsx";
 import type { VenueResponse, Venue } from "./types/Venue.tsx";
 import type { Attraction, AttractionResponse } from "./types/Attraction.tsx";
@@ -48,8 +49,13 @@ const useEventStore = create<StoreState>((set) => ({
   },
   saveEvent: (event: Event) => {
     // http://localhost:8000/api/events
+    const { token } = useAuthStore.getState();
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    };
     axiosInstance
-      .post<Event>("http://localhost:8000/api/events", event)
+      .post<Event>("http://localhost:8000/api/events", event, { headers })
       .then((response: any) => {
         const state = useEventStore.getState();
         set({ events: [...state.events, response.data] });

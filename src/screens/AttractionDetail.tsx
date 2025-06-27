@@ -4,6 +4,7 @@ import LoaderComponent from "@/components/Loader.tsx";
 import axiosInstance from "@/plugins/interceptor.ts";
 import type { AttractionDetail } from "@/types/Attraction.ts";
 
+
 const AttractionDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [attraction, setAttraction] = useState<any>(null);
@@ -30,6 +31,8 @@ const AttractionDetail: React.FC = () => {
 
     fetchAttractionDetails();
   }, [id]);
+
+  
 
   if (loading) {
     return (

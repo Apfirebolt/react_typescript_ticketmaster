@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import useEventStore from "@/stores/events.ts";
 import axiosInstance from "@/plugins/interceptor.ts";
 import LoaderComponent from "@/components/Loader.tsx";
 
@@ -8,6 +9,7 @@ interface EventDetailProps {
 }
 
 const EventDetail: React.FC = () => {
+  const { saveEvent } = useEventStore();
   const { id } = useParams<EventDetailProps>();
   const [event, setEvent] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -32,6 +34,24 @@ const EventDetail: React.FC = () => {
 
     fetchEventDetails();
   }, [id]);
+
+  const saveEventUtil = async () => {
+    try {
+      setLoading(true);
+      const payload = {
+        name: event.name,
+        description: event.info,
+        start_date: event.dates?.start?.localDate,
+        start_time: event.dates?.start?.dateTime,
+        location: event._embedded?.venues[0]?.name,
+      };
+      await saveEvent(payload);
+      setLoading(false);
+    } catch (err: any) {
+      setError(err.message);
+      setLoading(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -77,7 +97,7 @@ const EventDetail: React.FC = () => {
         )}
         <div className="flex justify-center">
           <button
-            onClick={() => console.log("Event saved:", event)}
+            onClick={() => saveEventUtil(event.id)}
             className="bg-primary-100 text-white py-2 mx-auto px-4 rounded hover:bg-primary-200"
           >
             Save Event
