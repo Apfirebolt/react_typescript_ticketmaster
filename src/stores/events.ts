@@ -29,9 +29,11 @@ interface StoreState {
   links: PaginationLinks;
   error: any;
   getEvents: () => Event[];
+  saveEvent: (event: Event) => void;
   getVenues: () => Venue[];
   getAttractions: () => Attraction[];
   getVenuesAction: () => Promise<void>;
+  getSavedEvents: () => Promise<void>;
   getEventsAction: () => Promise<void>;
   getAttractionsAction: () => Promise<void>;
 }
@@ -82,10 +84,14 @@ const useEventStore = create<StoreState>((set) => ({
   },
   getSavedEvents: () => {
     // http://localhost:8000/api/events
+    const { token } = useAuthStore.getState();
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    };
     axiosInstance
-      .get<Event[]>("http://localhost:8000/api/events")
+      .get<Event[]>("http://localhost:8000/api/events", { headers })
       .then((response: any) => {
-        const state = useEventStore.getState();
         set({ savedEvents: response.data });
       })
       .catch((error: any) => {

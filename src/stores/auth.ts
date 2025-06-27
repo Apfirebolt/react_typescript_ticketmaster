@@ -13,16 +13,21 @@ interface AuthState {
 }
 
 const useAuthStore = create<AuthState>((set) => ({
-    user: null,
-    token: null,
+    user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!) : null,
+    token: localStorage.getItem("token"),
     loading: false,
     error: null,
     login: async (email: string, password: string) => {
         try {
             set({ loading: true, error: null });
             const response = await axios.post("http://localhost:8000/api/auth/login", { email, password });
+            if (response.status !== 200) {
+                throw new Error("Login failed");
+            }
+            // Save user and token in the store and localStorage
+            localStorage.setItem("user", JSON.stringify(response.data.user));
+            localStorage.setItem("token", response.data.access_token); // Save token to localStorage
             set({ user: response.data.user, token: response.data.access_token });
-            localStorage.setItem("token", response.data.token); // Save token to localStorage
         } catch (error) {
             console.error("Login error:", error);
             set({ error: "Failed to login" });
@@ -32,6 +37,7 @@ const useAuthStore = create<AuthState>((set) => ({
     },
     logout: () => {
         set({ user: null, token: null });
+        localStorage.removeItem("user"); // Remove user from localStorage
         localStorage.removeItem("token"); // Remove token from localStorage
     },
     register: async (username: string, email: string, password: string) => {

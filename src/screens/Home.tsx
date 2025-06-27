@@ -1,6 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
+import useAuthStore from "@/stores/auth.ts";
+import useEventStore from "@/stores/events.ts";
 
 const Home = () => {
+  const { user } = useAuthStore();
+  const { getSavedEvents, savedEvents } = useEventStore();
+
+  useEffect(() => {
+    if (user) {
+      console.log("User is logged in:", user);
+      // Fetch events when the user is logged in
+      getSavedEvents();
+    }
+  }, [user]);
+
+  console.log("Events:", savedEvents);
+
   return (
     <div className="min-h-screen bg-primary-200 container text-secondary-200 mx-auto pt-6">
       <div
@@ -19,6 +34,21 @@ const Home = () => {
             shows.
           </p>
         </div>
+
+        {savedEvents && savedEvents.length > 0 && (
+          <div className="mt-8 bg-white bg-opacity-90 p-6 rounded-lg shadow-lg max-w-4xl">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">Your Saved Events</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {savedEvents.map((event, index) => (
+                <div key={index} className="bg-gray-100 p-4 rounded-lg shadow">
+                  <h3 className="font-semibold text-gray-800">{event.name}</h3>
+                  <p className="text-gray-600">{event.start_date}</p>
+                  <p className="text-gray-600">{event.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
