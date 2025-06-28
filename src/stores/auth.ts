@@ -1,5 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { toastOptions } from "@/lib/utils.ts";
 
 interface AuthState {
     user: any;
@@ -24,6 +26,7 @@ const useAuthStore = create<AuthState>((set) => ({
             if (response.status !== 200) {
                 throw new Error("Login failed");
             }
+            toast.success("Login successful", toastOptions);
             // Save user and token in the store and localStorage
             localStorage.setItem("user", JSON.stringify(response.data.user));
             localStorage.setItem("token", response.data.access_token); // Save token to localStorage
@@ -36,9 +39,11 @@ const useAuthStore = create<AuthState>((set) => ({
         }
     },
     logout: () => {
+        console.log("Logging out...");
         set({ user: null, token: null });
-        localStorage.removeItem("user"); // Remove user from localStorage
-        localStorage.removeItem("token"); // Remove token from localStorage
+        toast.success("Logout successful", toastOptions);
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
     },
     register: async (username: string, email: string, password: string) => {
         try {

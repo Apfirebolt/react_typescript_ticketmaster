@@ -4,6 +4,8 @@ import type { Event, EventResponse } from "./types/Event.tsx";
 import type { VenueResponse, Venue } from "./types/Venue.tsx";
 import type { Attraction, AttractionResponse } from "./types/Attraction.tsx";
 import axiosInstance from "../plugins/interceptor.ts";
+import { toast } from "react-toastify";
+import { toastOptions } from "@/lib/utils.ts";
 
 interface PaginationLinks {
   first: {
@@ -59,11 +61,13 @@ const useEventStore = create<StoreState>((set) => ({
     axiosInstance
       .post<Event>("http://localhost:8000/api/events", event, { headers })
       .then((response: any) => {
+        toast.success("Event saved successfully", toastOptions);
         const state = useEventStore.getState();
         set({ events: [...state.events, response.data] });
       })
       .catch((error: any) => {
         console.error("Error saving event:", error);
+        toast.error("Failed to save event", toastOptions);
         set({ error: "Failed to save event" });
       });
   },

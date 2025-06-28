@@ -11,7 +11,6 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   (error: AxiosError): Promise<AxiosError> => {
-    console.log('Something went wrong', error);
     // if the error is 404, display toast message
     if (error.response && error.response.status === 404) {
       toast.error('404 error');

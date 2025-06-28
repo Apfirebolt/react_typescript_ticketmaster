@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import useAuthStore from "@/stores/auth.ts";
 import useEventStore from "@/stores/events.ts";
+import dayjs from "dayjs";
+
 
 const Home = () => {
   const { user } = useAuthStore();
@@ -14,7 +16,14 @@ const Home = () => {
     }
   }, [user]);
 
-  console.log("Events:", savedEvents);
+  const formatDate = (date: string) => {
+    return dayjs(date).format("MMMM D, YYYY");
+  };
+
+  const trimDescription = (description: string) => {
+    if (!description) return "";
+    return description.length > 100 ? description.substring(0, 100) + "..." : description;
+  };
 
   return (
     <div className="min-h-screen bg-primary-200 container text-secondary-200 mx-auto pt-6">
@@ -40,10 +49,10 @@ const Home = () => {
             <h2 className="text-2xl font-bold text-gray-800 mb-4">Your Saved Events</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {savedEvents.map((event, index) => (
-                <div key={index} className="bg-gray-100 p-4 rounded-lg shadow">
-                  <h3 className="font-semibold text-gray-800">{event.name}</h3>
-                  <p className="text-gray-600">{event.start_date}</p>
-                  <p className="text-gray-600">{event.description}</p>
+                <div key={index} className="bg-gray-100 text-primary-100 p-4 rounded-lg shadow">
+                  <h3 className="font-semibold my-3 bg-white shadow-md px-2 py-3">{event.name}</h3>
+                  <p className="my-3">{formatDate(event.start_date)}</p>
+                  <p>{trimDescription(event.description)}</p>
                 </div>
               ))}
             </div>

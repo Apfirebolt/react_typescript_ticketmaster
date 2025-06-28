@@ -59,7 +59,6 @@ const App = () => {
         </animated.div>
       ))}
       <Footer />
-      <ToastContainer />
     </>
   );
 };
@@ -68,6 +67,7 @@ const RootApp = () => {
   return (
     <Router>
       <App />
+      <ToastContainer />
     </Router>
   );
 };
