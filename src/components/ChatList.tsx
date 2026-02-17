@@ -55,7 +55,7 @@ const ChatList: React.FC = () => {
                 key={chat.id}
                 className={`p-3 rounded-lg cursor-pointer transition-colors ${
                   isActive
-                    ? "bg-primary-100 border-l-4 border-primary-300"
+                    ? "bg-primary-100 border-l-4 border-primary-300 text-white"
                     : "bg-gray-50 hover:bg-gray-100"
                 }`}
                 onClick={() => selectChat(chat)}
@@ -80,7 +80,7 @@ const ChatList: React.FC = () => {
                   
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
-                      <h3 className="font-medium text-gray-800 truncate">
+                      <h3 className="font-medium truncate">
                         {otherUser?.username || "Unknown User"}
                       </h3>
                       {chat.last_message && chat.last_message.is_read === 0 && chat.last_message.sender_id !== currentUser?.id && (
@@ -91,7 +91,7 @@ const ChatList: React.FC = () => {
                     </div>
                     
                     {chat.last_message && (
-                      <p className="text-sm text-gray-500 truncate">
+                      <p className="text-sm truncate">
                         {chat.last_message.sender_id === currentUser?.id ? "You: " : ""}
                         {chat.last_message.content}
                       </p>

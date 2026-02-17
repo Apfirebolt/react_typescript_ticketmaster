@@ -72,13 +72,13 @@ const UserList: React.FC<UserListProps> = ({ onStartChat }) => {
                   )}
                 </div>
                 
-                <div className="flex-1">
-                  <h3 className="font-medium text-gray-800">{user.username}</h3>
-                  <p className="text-sm text-gray-500">{user.email}</p>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-medium text-gray-800 truncate">{user.username}</h3>
+                  <p className="text-sm text-gray-500 truncate">{user.email}</p>
                   {!user.isOnline && user.lastSeen && (
-                    <p className="text-xs text-gray-400">
-                      Last seen: {new Date(user.lastSeen).toLocaleString()}
-                    </p>
+                  <p className="text-xs text-gray-400">
+                    Last seen: {new Date(user.lastSeen).toLocaleString()}
+                  </p>
                   )}
                 </div>
               </div>

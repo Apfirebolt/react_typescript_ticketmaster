@@ -20,9 +20,10 @@ const MessageInput: React.FC<MessageInputProps> = ({ selectedUser }) => {
 
     if (activeChat) {
       // Get the other participant's ID from active chat
-      const otherUser = activeChat.participants.find(p => p.id !== currentUser?.id);
-      if (!otherUser) return;
-      receiverId = otherUser.id;
+      const otherUserId = activeChat.participant_1.id === currentUser?.id 
+        ? activeChat.participant_2.id 
+        : activeChat.participant_1.id;
+      receiverId = otherUserId;
     } else if (selectedUser) {
       // Use selected user ID
       receiverId = selectedUser.id;

@@ -115,7 +115,7 @@ const useChatStore = create<ChatStore>((set, get) => ({
         throw new Error("No authentication token found");
       }
 
-      const response = await axios.get(`http://localhost:8000/api/chats/${chatId}/messages`, {
+      const response = await axios.get(`http://localhost:8000/api/chat/conversations/${chatId}/messages`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
