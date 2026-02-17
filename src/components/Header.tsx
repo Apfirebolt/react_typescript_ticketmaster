@@ -31,6 +31,10 @@ const HeaderComponent: React.FC = () => {
       name: "Event",
       url: "/events",
     },
+    {
+      name: "Chat",
+      url: "/chat",
+    },
   ];
 
   const { user, logout } = useAuthStore();
