@@ -22,7 +22,9 @@ const useAuthStore = create<AuthState>((set) => ({
     login: async (email: string, password: string) => {
         try {
             set({ loading: true, error: null });
-            const response = await axios.post("http://localhost:8000/api/auth/login", { email, password });
+            const response = await axios.post("http://localhost:8000/api/auth/login", { email, password }, {
+                timeout: 10000
+            });
             if (response.status !== 200) {
                 throw new Error("Login failed");
             }
