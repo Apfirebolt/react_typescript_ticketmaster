@@ -5,7 +5,7 @@ import type { Message } from "@/types/Chat.ts";
 import { FaUser } from "react-icons/fa";
 
 const ChatWindow: React.FC = () => {
-  const { activeChat, messages, loading, fetchMessages, users } = useChatStore();
+  const { activeChat, messages, loading, fetchMessages } = useChatStore();
   const { user: currentUser } = useAuthStore();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 

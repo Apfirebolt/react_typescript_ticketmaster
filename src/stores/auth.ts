@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
+import type { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { toastOptions } from "@/lib/utils.ts";
 
@@ -35,7 +36,16 @@ const useAuthStore = create<AuthState>((set) => ({
             set({ user: response.data.user, token: response.data.access_token });
         } catch (error) {
             console.error("Login error:", error);
-            set({ error: "Failed to login" });
+            const axiosError = error as AxiosError<{ message?: string; detail?: string; error?: string }>;
+            const backendMessage =
+                axiosError.response?.data?.message ||
+                axiosError.response?.data?.detail ||
+                axiosError.response?.data?.error ||
+                (axiosError.code === "ECONNABORTED" ? "Login request timed out. Please try again." : null) ||
+                "Failed to login";
+
+            set({ error: backendMessage });
+            throw new Error(backendMessage);
         } finally {
             set({ loading: false });
         }
