@@ -9,6 +9,11 @@ const __dirname = path.dirname(__filename)
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  test: {
+    environment: "jsdom",
+    globals: true,
+    clearMocks: true,
+  },
   server: {
     port: 3000,
   },

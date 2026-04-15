@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import useAuthStore from "./auth.ts";
-import type { Event, EventResponse } from "./types/Event.tsx";
-import type { VenueResponse, Venue } from "./types/Venue.tsx";
-import type { Attraction, AttractionResponse } from "./types/Attraction.tsx";
+import type { Event, EventResponse } from "@/types/Event.ts";
+import type { VenueResponse, Venue } from "@/types/Venue.ts";
+import type { Attraction, AttractionResponse } from "@/types/Attraction.ts";
 import axiosInstance from "../plugins/interceptor.ts";
 import { toast } from "react-toastify";
 import { toastOptions } from "@/lib/utils.ts";
