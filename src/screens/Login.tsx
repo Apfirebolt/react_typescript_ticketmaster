@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import useAuthStore from "@/stores/auth.ts";
 import { FaLock, FaUserAlt } from "react-icons/fa";
+import { toast } from "react-toastify";
+import { toastOptions } from "@/lib/utils.ts";
 
 const Login: React.FC = () => {
   const { login } = useAuthStore();
@@ -10,6 +12,18 @@ const Login: React.FC = () => {
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const reason = params.get("reason");
+    const authMessage = sessionStorage.getItem("auth_message");
+
+    if (reason === "session_expired" || authMessage) {
+      toast.error(authMessage || "Session expired. Please log in again.", toastOptions);
+      sessionStorage.removeItem("auth_message");
+    }
+  }, [location.search]);
 
   const handleLogin = async (): Promise<void> => {
     setError("");
@@ -19,7 +33,7 @@ const Login: React.FC = () => {
       await login(email, password);
       navigate("/");
     } catch (err: any) {
-      setError("Invalid email or password");
+      setError(err?.message || "Invalid email or password");
     } finally {
       setLoading(false);
     }
